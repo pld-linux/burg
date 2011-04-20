@@ -1,0 +1,113 @@
+--- burg-1.98.r1844-bzr/util/grub.d/00_header.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/grub.d/00_header.in	2011-04-19 11:42:02.029331593 +0200
+@@ -27,7 +27,7 @@
+ sysconfdir=@sysconfdir@
+ pass_file=${sysconfdir}/default/burg-passwd
+ 
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ # Do this as early as possible, since other commands might depend on it.
+ # (e.g. the `loadfont' command might need lvm or raid modules)
+--- burg-1.98.r1844-bzr/util/grub.d/10_hurd.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/grub.d/10_hurd.in	2011-04-19 11:44:20.972669603 +0200
+@@ -19,7 +19,7 @@
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ CLASS="--class gnu --class os"
+ 
+--- burg-1.98.r1844-bzr/util/grub.d/10_linux.in~	2011-04-19 11:33:43.929315411 +0200
++++ burg-1.98.r1844-bzr/util/grub.d/10_linux.in	2011-04-19 11:45:07.839337671 +0200
+@@ -20,7 +20,7 @@
+ exec_prefix=@exec_prefix@
+ bindir=@bindir@
+ libdir=@libdir@
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ export TEXTDOMAIN=@PACKAGE@
+ export TEXTDOMAINDIR=@localedir@
+--- burg-1.98.r1844-bzr/util/grub.d/10_windows.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/grub.d/10_windows.in	2011-04-19 11:45:53.182672563 +0200
+@@ -19,7 +19,7 @@
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ case "`uname 2>/dev/null`" in
+   CYGWIN*)  ;;
+--- burg-1.98.r1844-bzr/util/grub.d/30_os-prober.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/grub.d/30_os-prober.in	2011-04-19 11:46:25.046007009 +0200
+@@ -20,7 +20,7 @@
+ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+ 
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ if [ "x${GRUB_DISABLE_OS_PROBER}" = "xtrue" ]; then
+   exit 0
+--- burg-1.98.r1844-bzr/util/grub-mkconfig.in~	2011-04-19 11:33:43.932648744 +0200
++++ burg-1.98.r1844-bzr/util/grub-mkconfig.in	2011-04-19 11:47:12.666008544 +0200
+@@ -73,7 +73,7 @@
+     esac
+ done
+ 
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ case "$host_os" in
+ netbsd* | openbsd*)
+--- burg-1.98.r1844-bzr/util/grub-install.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/grub-install.in	2011-04-19 11:47:58.406010031 +0200
+@@ -160,7 +160,7 @@
+ done
+ 
+ # for make_system_path_relative_to_its_root()
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ if test "x$install_device" = x && test "${target_cpu}-${platform}" != "mips-yeeloong"; then
+     echo "install_device not specified." 1>&2
+--- burg-1.98.r1844-bzr/util/update-grub_lib.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/update-grub_lib.in	2011-04-19 11:48:34.772677896 +0200
+@@ -18,6 +18,6 @@
+ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+ 
+-. ${libdir}/burg/burg-mkconfig_lib
++. /lib/burg-mkconfig_lib
+ 
+ grub_warn "update-burg_lib is deprecated, use burg-mkconfig_lib instead"
+--- burg-1.98.r1844-bzr/Makefile.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/Makefile.in	2011-04-20 12:54:45.433360015 +0200
+@@ -343,12 +343,12 @@
+ 	  dest="`echo $$file | sed 's,.*/,,;s,grub,burg,' | sed '$(transform)'`"; \
+ 	  $(INSTALL_DATA) $$dir$$file $(DESTDIR)$(sysconfdir)/$(PACKAGE_TARNAME).d/$$dest; \
+ 	done
+-	$(SHELL) $(mkinstalldirs) $(DESTDIR)$(libdir)/$(PACKAGE_TARNAME)
++	$(SHELL) $(mkinstalldirs) $(DESTDIR)/lib
+ 	@list='$(lib_SCRIPTS)'; \
+ 	for file in $$list; do \
+ 	  if test -f "$$file"; then dir=; else dir="$(srcdir)/"; fi; \
+ 	  dest="`echo $$file | sed 's,.*/,,;s,grub,burg,'`"; \
+-	  $(INSTALL_DATA) $$dir$$file $(DESTDIR)$(libdir)/$(PACKAGE_TARNAME)/$$dest; \
++	  $(INSTALL_DATA) $$dir$$file $(DESTDIR)/lib/$$dest; \
+ 	done
+ 	@langs='$(LINGUAS)'; \
+ 	for lang in $$langs; do \
+@@ -400,7 +400,7 @@
+ 	@list='$(lib_SCRIPTS)'; \
+ 	for file in $$list; do \
+ 	  dest="`echo $$file | sed 's,.*/,,;s,grub,burg,'`"; \
+-	  rm -f $(DESTDIR)$(libdir)/grub/$$dest; \
++	  rm -f $(DESTDIR)/lib/$$dest; \
+ 	done
+ 	@list='$(info_INFOS)'; \
+ 	for file in $$list; do \

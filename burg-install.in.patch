@@ -1,0 +1,91 @@
+--- burg-1.98.r1844-bzr/util/grub-install.in~	2011-04-19 11:49:46.672680248 +0200
++++ burg-1.98.r1844-bzr/util/grub-install.in	2011-04-19 11:56:02.052692531 +0200
+@@ -31,7 +31,7 @@
+ platform=@platform@
+ host_os=@host_os@
+ font=@datadir@/@PACKAGE_TARNAME@/ascii.pf2
+-pkglibdir=${libdir}/`echo ${PACKAGE_TARNAME}/${target_cpu}-${platform} | sed ${transform}`
++pkglibdir=${libdir}/`echo ${PACKAGE_TARNAME} | sed ${transform}`
+ localedir=@datadir@/locale
+ 
+ grub_setup=${sbindir}/`echo burg-setup | sed ${transform}`
+@@ -247,23 +247,6 @@
+     exit 1
+ fi
+ 
+-# Copy the GRUB images to the GRUB directory.
+-for file in ${grubdir}/*.mod ${grubdir}/*.lst ${grubdir}/*.img ${grubdir}/efiemu??.o; do
+-    if test -f $file && [ "`basename $file`" != menu.lst ]; then
+-	rm -f $file || exit 1
+-    fi
+-done
+-for file in ${pkglibdir}/*.mod ${pkglibdir}/*.lst; do
+-    cp -f $file ${grubdir} || exit 1
+-done
+-if [ "${target_cpu}-${platform}" = "i386-pc" ] || [ "${target_cpu}-${platform}" = "sparc64-ieee1275" ] ; then
+-    for file in ${pkglibdir}/*.img ${pkglibdir}/efiemu??.o; do
+-	if test -f $file; then
+-	    cp -f $file ${grubdir} || exit 1
+-	fi
+-    done
+-fi
+-
+ # Copy gettext files
+ mkdir -p ${grubdir}/locale/
+ for dir in ${localedir}/*; do
+--- burg-1.98.r1844-bzr/util/i386/efi/grub-install.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/i386/efi/grub-install.in	2011-04-19 11:57:58.526029606 +0200
+@@ -30,7 +30,7 @@
+ target_cpu=@target_cpu@
+ platform=@platform@
+ host_os=@host_os@
+-pkglibdir=${libdir}/`echo ${PACKAGE_TARNAME}/${target_cpu}-${platform} | sed ${transform}`
++pkglibdir=${libdir}/`echo ${PACKAGE_TARNAME} | sed ${transform}`
+ localedir=@datadir@/locale
+ 
+ grub_mkimage=${bindir}/`echo burg-mkimage | sed ${transform}`
+@@ -170,16 +170,6 @@
+     exit 1
+ fi
+ 
+-# Copy the GRUB images to the GRUB directory.
+-for file in ${grubdir}/*.mod ${grubdir}/*.lst; do
+-    if test -f $file && [ "`basename $file`" != menu.lst ]; then
+-	rm -f $file || exit 1
+-    fi
+-done
+-for file in ${pkglibdir}/*.mod ${pkglibdir}/*.lst; do
+-    cp -f $file ${grubdir} || exit 1
+-done
+-
+ # Copy gettext files
+ mkdir -p ${grubdir}/locale/
+ for dir in ${localedir}/*; do
+--- burg-1.98.r1844-bzr/util/ieee1275/grub-install.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/ieee1275/grub-install.in	2011-04-19 11:59:33.736032766 +0200
+@@ -32,7 +32,7 @@
+ PACKAGE_VERSION=@PACKAGE_VERSION@
+ target_cpu=@target_cpu@
+ platform=@platform@
+-pkglibdir=${libdir}/`echo ${PACKAGE_TARNAME}/${target_cpu}-${platform} | sed ${transform}`
++pkglibdir=${libdir}/`echo ${PACKAGE_TARNAME} | sed ${transform}`
+ 
+ grub_mkimage=${bindir}/`echo burg-mkelfimage | sed ${transform}`
+ grub_mkdevicemap=${sbindir}/`echo burg-mkdevicemap | sed ${transform}`
+@@ -153,16 +153,6 @@
+     $grub_mkdevicemap --device-map=$device_map $no_floppy || exit 1
+ fi
+ 
+-# Copy the GRUB images to the GRUB directory.
+-for file in ${grubdir}/*.mod ${grubdir}/*.lst ; do
+-    if test -f $file; then
+-	rm -f $file || exit 1
+-    fi
+-done
+-for file in ${pkglibdir}/*.mod ${pkglibdir}/*.lst ; do
+-    cp -f $file ${grubdir} || exit 1
+-done
+-
+ if ! test -f ${grubdir}/burgenv; then
+     $grub_editenv ${grubdir}/burgenv create
+ fi

@@ -1,0 +1,11 @@
+--- burg-1.98.r1844-bzr/util/grub.d/10_linux.in~	2011-04-19 10:42:18.000000000 +0200
++++ burg-1.98.r1844-bzr/util/grub.d/10_linux.in	2011-04-19 11:18:23.869285301 +0200
+@@ -122,7 +122,7 @@
+   initrd=
+   for i in "initrd.img-${version}" "initrd-${version}.img" \
+ 	   "initrd-${version}" "initramfs-${version}.img" \
+-	   "initrd.img-${alt_version}" "initrd-${alt_version}.img" \
++	   "initrd.img-${alt_version}" "initrd-${alt_version}.img" "initrd-${version}.gz" \
+ 	   "initrd-${alt_version}" "initramfs-${alt_version}.img"; do
+     if test -e "${dirname}/${i}" ; then
+       initrd="$i"
