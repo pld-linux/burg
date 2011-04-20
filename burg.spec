@@ -59,7 +59,6 @@ Suggests:	cdrkit-mkisofs
 Suggests:	os-prober
 Provides:	bootloader
 Conflicts:	grub
-Conflicts:	grub2
 ExclusiveArch:	%{ix86} %{x8664} ppc sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
