@@ -12,8 +12,7 @@
 %bcond_with	burgemu		# build burg-emu debugging utility
 #
 %define		rev	r1844
-Summary:	-
-Summary(pl.UTF-8):	-
+Summary:	Brand-new Universal loadeR from Grub
 Name:		burg
 Version:	1.98.%{rev}
 Release:	0.%{rev}.1
@@ -32,7 +31,7 @@ Patch5:		%{name}-lvmdevice.patch
 Patch6:		pld-mkconfigdir.patch
 # TODO: needs updates
 Patch7:		%{name}-mkconfig-diagnostics.patch
-URL:		https://launchpad.net/~bean123ch/+archive/burg
+URL:		https://launchpad.net/burg
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -68,8 +67,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_libexecdir	%{_libdir}/burg
 
 %description
-
-%description -l pl.UTF-8
+burg is a brand-new boot loader based on GRUB. It uses a new object
+format which allows it to be built in a wider range of OS, including
+Linux/Windows/OSX/FreeBSD, etc. It also has a highly configurable menu
+system which works in both text and graphic mode. Additional features
+like stream support and multiple input/output device are also planned.
 
 %prep
 %setup -q -n %{name}-%{version}-bzr
