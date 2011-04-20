@@ -6,6 +6,7 @@
 #   - put burg-emu to subpackage if it is fixed
 # - merge more from grub2.spec
 # - desc
+# - how to enable themes?
 #
 # Conditional build:
 %bcond_with	burgemu		# build burg-emu debugging utility
